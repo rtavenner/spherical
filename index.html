@@ -12421,7 +12421,7 @@ var _user$project$Main$mkVertex = F2(
 			color,
 			_elm_community$linear_algebra$Math_Vector4$normalize(position));
 	});
-var _user$project$Main$mesh2 = _elm_community$webgl$WebGL$lines(
+var _user$project$Main$mesh = _elm_community$webgl$WebGL$triangles(
 	A2(
 		_elm_lang$core$List$concatMap,
 		function (m) {
@@ -12430,7 +12430,7 @@ var _user$project$Main$mesh2 = _elm_community$webgl$WebGL$lines(
 				function (_p1) {
 					var _p2 = _p1;
 					return {
-						ctor: '_Tuple2',
+						ctor: '_Tuple3',
 						_0: A2(
 							_user$project$Main$mkVertex,
 							A3(_elm_community$linear_algebra$Math_Vector3$vec3, 0, 0, 0),
@@ -12438,7 +12438,52 @@ var _user$project$Main$mesh2 = _elm_community$webgl$WebGL$lines(
 						_1: A2(
 							_user$project$Main$mkVertex,
 							A3(_elm_community$linear_algebra$Math_Vector3$vec3, 0, 0, 0),
-							_p2._1)
+							_p2._1),
+						_2: A2(
+							_user$project$Main$mkVertex,
+							A3(_elm_community$linear_algebra$Math_Vector3$vec3, 0, 0, 0),
+							_p2._2)
+					};
+				},
+				{
+					ctor: '::',
+					_0: {
+						ctor: '_Tuple3',
+						_0: A2(
+							_user$project$Matrices$transform4,
+							m,
+							A4(_elm_community$linear_algebra$Math_Vector4$vec4, 0.0, 0.2618, -0.1, 1)),
+						_1: A2(
+							_user$project$Matrices$transform4,
+							m,
+							A4(_elm_community$linear_algebra$Math_Vector4$vec4, 0.1618, 0.1618, -0.1618, 1)),
+						_2: A2(
+							_user$project$Matrices$transform4,
+							m,
+							A4(_elm_community$linear_algebra$Math_Vector4$vec4, 0.1618, 0.1618 + 0.1, -0.1618 - 0.162, 0.94))
+					},
+					_1: {ctor: '[]'}
+				});
+		},
+		_user$project$Symmetry$h4));
+var _user$project$Main$mesh2 = _elm_community$webgl$WebGL$lines(
+	A2(
+		_elm_lang$core$List$concatMap,
+		function (m) {
+			return A2(
+				_elm_lang$core$List$map,
+				function (_p3) {
+					var _p4 = _p3;
+					return {
+						ctor: '_Tuple2',
+						_0: A2(
+							_user$project$Main$mkVertex,
+							A3(_elm_community$linear_algebra$Math_Vector3$vec3, 0, 0, 0),
+							_p4._0),
+						_1: A2(
+							_user$project$Main$mkVertex,
+							A3(_elm_community$linear_algebra$Math_Vector3$vec3, 0, 0, 0),
+							_p4._1)
 					};
 				},
 				{
@@ -12448,13 +12493,27 @@ var _user$project$Main$mesh2 = _elm_community$webgl$WebGL$lines(
 						_0: A2(
 							_user$project$Matrices$transform4,
 							m,
-							A4(_elm_community$linear_algebra$Math_Vector4$vec4, 0.0, 0.26, -0.1, 1)),
+							A4(_elm_community$linear_algebra$Math_Vector4$vec4, 0.0, 0.2618, -0.1, 1)),
 						_1: A2(
 							_user$project$Matrices$transform4,
 							m,
-							A4(_elm_community$linear_algebra$Math_Vector4$vec4, 0.0, 0.26, 0.1, 1))
+							A4(_elm_community$linear_algebra$Math_Vector4$vec4, 0.0, 0.2618, 0.1, 1))
 					},
-					_1: {ctor: '[]'}
+					_1: {
+						ctor: '::',
+						_0: {
+							ctor: '_Tuple2',
+							_0: A2(
+								_user$project$Matrices$transform4,
+								m,
+								A4(_elm_community$linear_algebra$Math_Vector4$vec4, 0.1618, 0.1618, -0.1618, 1)),
+							_1: A2(
+								_user$project$Matrices$transform4,
+								m,
+								A4(_elm_community$linear_algebra$Math_Vector4$vec4, 0.1618, 0.1618 + 0.1, -0.1618 - 0.162, 0.94))
+						},
+						_1: {ctor: '[]'}
+					}
 				});
 		},
 		_user$project$Symmetry$h4));
@@ -12495,7 +12554,20 @@ var _user$project$Main$view = function (mat) {
 					perspective: A4(_elm_community$linear_algebra$Math_Matrix4$makePerspective, 90, 3 / 2, 1.0e-2, 1),
 					shade: 0.8
 				}),
-			_1: {ctor: '[]'}
+			_1: {
+				ctor: '::',
+				_0: A4(
+					_elm_community$webgl$WebGL$entity,
+					_user$project$Main$vertexShader,
+					_user$project$Main$fragmentShader,
+					_user$project$Main$mesh,
+					{
+						rotation: mat,
+						perspective: A4(_elm_community$linear_algebra$Math_Matrix4$makePerspective, 90, 3 / 2, 1.0e-2, 1),
+						shade: 0.8
+					}),
+				_1: {ctor: '[]'}
+			}
 		});
 };
 var _user$project$Main$Key = function (a) {
@@ -12505,7 +12577,7 @@ var _user$project$Main$main = _elm_lang$html$Html$program(
 	{
 		init: {ctor: '_Tuple2', _0: _elm_community$linear_algebra$Math_Matrix4$identity, _1: _elm_lang$core$Platform_Cmd$none},
 		view: _user$project$Main$view,
-		subscriptions: function (_p3) {
+		subscriptions: function (_p5) {
 			return _elm_lang$keyboard$Keyboard$downs(_user$project$Main$Key);
 		},
 		update: _user$project$Main$update

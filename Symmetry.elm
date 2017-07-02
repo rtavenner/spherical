@@ -65,23 +65,11 @@ h3 = combineSymms h3pentplane [rotateOutOfPentPlane]
 pentagonal : Symmetries
 pentagonal =
     let rot n = spin (2*pi*n/5)
-        --fromTuples
-        --    ( (cos (2*pi*n/5),-(sin (2*pi*n/5)),0,0)
-        --    , (sin (2*pi*n/5),  cos (2*pi*n/5) ,0,0)
-        --    , (             0,                0,1,0)
-        --    , (             0,                0,0,1)
-        --    )
     in List.map (rot << toFloat) (List.range 0 4)
 
 column : Symmetries
 column = 
     let rot n = mul (moveForward (pi*n/5)) (spin (pi*n/5))
-        --fromTuples
-        --    ( (cos (pi*n/5),-(sin (pi*n/5)),           0,              0)
-        --    , (sin (pi*n/5),  cos (pi*n/5) ,           0,              0)
-        --    , (           0,              0,cos (pi*n/5),-(sin (pi*n/5)))
-        --    , (           0,              0,sin (pi*n/5),  cos (pi*n/5) )
-        --    )
     in List.map (rot << toFloat) (List.range 0 9)
 
 column2 : Symmetries

@@ -47,6 +47,14 @@ view mat =
             , perspective = Mat4.makePerspective 90 (3/2) 0.01 1
             , shade = 0.8
             }
+        , WebGL.entity
+            vertexShader
+            fragmentShader
+            mesh
+            { rotation = mat
+            , perspective = Mat4.makePerspective 90 (3/2) 0.01 1
+            , shade = 0.8
+            }
         ]
 
 
@@ -64,14 +72,26 @@ type alias Vertex =
 mkVertex : Vec3 -> Vec4 -> Vertex
 mkVertex color position = Vertex color (Vec4.normalize position)
 
-
+mesh =
+    WebGL.triangles
+        (List.concatMap
+            (\m -> List.map (\(a,b,c) -> (mkVertex (vec3 0 0 0) a, mkVertex (vec3 0 0 0) b, mkVertex (vec3 0 0 0) c))
+                -- Messed around with the numbers until it looked good.
+                [ ( transform4 m (vec4 0.0000 0.2618 -0.1 1)
+                  , transform4 m (vec4 0.1618 0.1618 -0.1618 1)
+                  , transform4 m (vec4 0.1618 (0.1618 + 0.100) (-0.1618 - 0.162) (0.94)))
+                ]
+                )
+            (Symmetry.h4))
 
 mesh2 =
     WebGL.lines
         (List.concatMap
             (\m -> List.map (\(a,b) -> (mkVertex (vec3 0 0 0) a, mkVertex (vec3 0 0 0) b))
-                [ ( transform4 m (vec4 0.00 0.26 -0.1 1)
-                  , transform4 m (vec4 0.00 0.26  0.1 1))
+                [ ( transform4 m (vec4 0.0000 0.2618 -0.1 1)
+                  , transform4 m (vec4 0.0000 0.2618  0.1 1))
+                , ( transform4 m (vec4 0.1618 0.1618 -0.1618 1)
+                  , transform4 m (vec4 0.1618 (0.1618 + 0.100) (-0.1618 - 0.162) (0.94)))
                 ]
                 )
             (Symmetry.h4))
