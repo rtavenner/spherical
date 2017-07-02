@@ -26,6 +26,14 @@ moveRight theta =
         ,(           0,0,1,        0)
         ,(-(sin theta),0,0,cos theta))
 
+moveUp : Float -> Mat4
+moveUp theta =
+    fromTuples
+        ((1,           0,0,        0)
+        ,(0,   cos theta,0,sin theta)
+        ,(0,           0,1,        0)
+        ,(0,-(sin theta),0,cos theta))
+
 turnRight : Float -> Mat4
 turnRight theta =
     fromTuples

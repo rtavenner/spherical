@@ -7,33 +7,56 @@ import WebGL exposing (Mesh, Shader)
 import Keyboard
 import Matrices exposing (..)
 import Symmetry
+import Time
+import AnimationFrame
+import Set exposing (Set)
 
-type alias Model = Mat4
-type Msg = Key Int
+
+
+type alias Model = {pos : Mat4, keys : Set Int}
+type Msg = 
+    KeyDown Int
+    | KeyUp Int
+    | Tick Float
 
 main : Program Never Model Msg
 main =
     Html.program
-        { init = ( Mat4.identity, Cmd.none )
+        { init = {pos = Mat4.identity, keys = Set.empty} ! []
         , view = view
-        , subscriptions = (\_ -> Keyboard.downs Key) 
+        , subscriptions = 
+            (\_ -> 
+                Sub.batch 
+                    [ Keyboard.downs KeyDown
+                    , Keyboard.ups KeyUp
+                    , AnimationFrame.diffs (Tick << Time.inSeconds)]) 
         , update = update
         }
 
-update msg mat = 
+update msg model = 
     case msg of
-        Key 73 -> Mat4.mul (turnUp       0.030) mat ! []
-        Key 74 -> Mat4.mul (turnRight   -0.030) mat ! []
-        Key 75 -> Mat4.mul (turnUp      -0.030) mat ! []
-        Key 76 -> Mat4.mul (turnRight    0.030) mat ! []
-        Key 87 -> Mat4.mul (moveForward  0.015) mat ! []
-        Key 65 -> Mat4.mul (moveRight   -0.015) mat ! []
-        Key 83 -> Mat4.mul (moveForward -0.015) mat ! []
-        Key 68 -> Mat4.mul (moveRight    0.015) mat ! []
-        Key _ -> mat ! []
+        KeyDown k -> {model | keys = Set.insert k model.keys} ! []
+        KeyUp   k -> {model | keys = Set.remove k model.keys} ! []
+        Tick dt ->
+            { model
+            | pos =
+                model.pos
+                |> Mat4.mul (if Set.member 73 model.keys then (turnUp      ( 0.5 * dt)) else Mat4.identity) 
+                |> Mat4.mul (if Set.member 74 model.keys then (turnRight   (-0.5 * dt)) else Mat4.identity) 
+                |> Mat4.mul (if Set.member 75 model.keys then (turnUp      (-0.5 * dt)) else Mat4.identity) 
+                |> Mat4.mul (if Set.member 76 model.keys then (turnRight   ( 0.5 * dt)) else Mat4.identity) 
+                |> Mat4.mul (if Set.member 79 model.keys then (spin        ( 0.5 * dt)) else Mat4.identity) 
+                |> Mat4.mul (if Set.member 85 model.keys then (spin        (-0.5 * dt)) else Mat4.identity) 
+                |> Mat4.mul (if Set.member 87 model.keys then (moveForward ( 0.5 * dt)) else Mat4.identity) 
+                |> Mat4.mul (if Set.member 83 model.keys then (moveForward (-0.5 * dt)) else Mat4.identity) 
+                |> Mat4.mul (if Set.member 65 model.keys then (moveRight   (-0.5 * dt)) else Mat4.identity) 
+                |> Mat4.mul (if Set.member 68 model.keys then (moveRight   ( 0.5 * dt)) else Mat4.identity) 
+                |> Mat4.mul (if Set.member 81 model.keys then (moveUp      ( 0.5 * dt)) else Mat4.identity) 
+                |> Mat4.mul (if Set.member 69 model.keys then (moveUp      (-0.5 * dt)) else Mat4.identity) 
+            } ! []
 
 view : Model -> Html Msg
-view mat =
+view model =
     WebGL.toHtml
         [ width 1200
         , height 800
@@ -43,20 +66,20 @@ view mat =
             vertexShader
             fragmentShader
             mesh2
-            { rotation = mat
-            , perspective = Mat4.makePerspective 45 (3/2) 0.01 10
-            , shade = 0.8
-            }
+            (uniforms model)
         , WebGL.entity
             vertexShader
             fragmentShader
             mesh
-            { rotation = mat
-            , perspective = Mat4.makePerspective 45 (3/2) 0.01 10
-            , shade = 0.8
-            }
+            (uniforms model)
         ]
 
+uniforms : Model -> Uniforms
+uniforms model =
+    { rotation = model.pos
+    , perspective = Mat4.makePerspective 80 (3/2) 0.01 10
+    , shade = 0.8
+    }
 
 type alias Uniforms =
     { rotation : Mat4
