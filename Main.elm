@@ -37,14 +37,14 @@ view mat =
     WebGL.toHtml
         [ width 1200
         , height 800
-        , style [ ( "display", "block" ), ("border", "10px solid black") ]
+        , style [ ( "display", "block" ), ("border", "10px solid black"), ("background-color", "black") ]
         ]
         [ WebGL.entity
             vertexShader
             fragmentShader
             mesh2
             { rotation = mat
-            , perspective = Mat4.makePerspective 90 (3/2) 0.01 1
+            , perspective = Mat4.makePerspective 45 (3/2) 0.01 10
             , shade = 0.8
             }
         , WebGL.entity
@@ -52,7 +52,7 @@ view mat =
             fragmentShader
             mesh
             { rotation = mat
-            , perspective = Mat4.makePerspective 90 (3/2) 0.01 1
+            , perspective = Mat4.makePerspective 45 (3/2) 0.01 10
             , shade = 0.8
             }
         ]
@@ -75,7 +75,7 @@ mkVertex color position = Vertex color (Vec4.normalize position)
 mesh =
     WebGL.triangles
         (List.concatMap
-            (\m -> List.map (\(a,b,c) -> (mkVertex (vec3 0 0 0) a, mkVertex (vec3 0 0 0) b, mkVertex (vec3 0 0 0) c))
+            (\m -> List.map (\(a,b,c) -> (mkVertex (vec3 1 1 1) a, mkVertex (vec3 1 1 1) b, mkVertex (vec3 1 1 1) c))
                 -- Messed around with the numbers until it looked good.
                 [ ( transform4 m (vec4 0.0000 0.2618 -0.1 1)
                   , transform4 m (vec4 0.1618 0.1618 -0.1618 1)
@@ -87,7 +87,7 @@ mesh =
 mesh2 =
     WebGL.lines
         (List.concatMap
-            (\m -> List.map (\(a,b) -> (mkVertex (vec3 0 0 0) a, mkVertex (vec3 0 0 0) b))
+            (\m -> List.map (\(a,b) -> (mkVertex (vec3 0.5 0.5 0.5) a, mkVertex (vec3 0.5 0.5 0.5) b))
                 [ ( transform4 m (vec4 0.0000 0.2618 -0.1 1)
                   , transform4 m (vec4 0.0000 0.2618  0.1 1))
                 , ( transform4 m (vec4 0.1618 0.1618 -0.1618 1)
@@ -107,10 +107,12 @@ vertexShader =
         uniform mat4 rotation;
         varying vec3 vcolor;
         void main () {
-            gl_Position = perspective * (rotation * position + vec4(0.0,0.0,0.0,1.0));
-            vec4 relpos = gl_Position - vec4(0.0,0.0,0.0,2.0);
-            float dist2 = relpos.x * relpos.x + relpos.y * relpos.y + relpos.z * relpos.z;
-            vcolor = vec3(1.0,1.0,1.0) - ((1.0 - dist2) * (vec3(1.0,1.0,1.0) - color));
+            vec4 pos = rotation * position;
+            gl_Position = perspective * (pos + vec4(0.0,0.0,0.0,1.0));
+            vec4 relpos = pos - vec4(0.0,0.0,0.0,1.0);
+            float dist2 = relpos.x * relpos.x + relpos.y * relpos.y + relpos.z * relpos.z + relpos.w * relpos.w;
+            // vcolor = vec3(1.0,1.0,1.0) - ((1.0 - (dist2 / 4.0)) * (vec3(1.0,1.0,1.0) - color));
+            vcolor = (1.0 - (dist2 / 4.0)) * color;
         }
 
     |]
@@ -124,7 +126,7 @@ fragmentShader =
         uniform float shade;
         varying vec3 vcolor;
         void main () {
-            gl_FragColor = shade * vec4(vcolor, 1);
+            gl_FragColor = clamp(shade * vec4(vcolor, 1), 0.1, 0.9);
         }
 
     |]
