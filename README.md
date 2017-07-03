@@ -3,7 +3,7 @@
 This is an unbounded, but finite, world of dodecahedra.
 
 WASD to move. QE for up/down
-IJKL to turn. UO to do a aileron roll.
+IJKL to turn. UO to do an aileron roll.
 
 This was coded in one day (July 1, 2017).
 It was then made cooler the next day.
