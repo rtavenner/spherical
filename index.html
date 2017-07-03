@@ -12084,6 +12084,9 @@ var _elm_lang$html$Html_Attributes$classList = function (list) {
 				A2(_elm_lang$core$List$filter, _elm_lang$core$Tuple$second, list))));
 };
 var _elm_lang$html$Html_Attributes$style = _elm_lang$virtual_dom$VirtualDom$style;
+var _elm_lang$html$Html_Lazy$lazy3 = _elm_lang$virtual_dom$VirtualDom$lazy3;
+var _elm_lang$html$Html_Lazy$lazy2 = _elm_lang$virtual_dom$VirtualDom$lazy2;
+var _elm_lang$html$Html_Lazy$lazy = _elm_lang$virtual_dom$VirtualDom$lazy;
 var _elm_lang$keyboard$Keyboard$onSelfMsg = F3(
 	function (router, _p0, state) {
 		var _p1 = _p0;
@@ -12653,79 +12656,131 @@ var _user$project$Main$uniforms = function (model) {
 		shade: 0.8
 	};
 };
-var _user$project$Main$update = F2(
-	function (msg, model) {
-		var _p0 = msg;
-		switch (_p0.ctor) {
-			case 'KeyDown':
-				return A2(
-					_elm_lang$core$Platform_Cmd_ops['!'],
-					_elm_lang$core$Native_Utils.update(
-						model,
-						{
-							keys: A2(_elm_lang$core$Set$insert, _p0._0, model.keys)
-						}),
-					{ctor: '[]'});
-			case 'KeyUp':
-				return A2(
-					_elm_lang$core$Platform_Cmd_ops['!'],
-					_elm_lang$core$Native_Utils.update(
-						model,
-						{
-							keys: A2(_elm_lang$core$Set$remove, _p0._0, model.keys)
-						}),
-					{ctor: '[]'});
-			default:
-				var _p1 = _p0._0;
-				return A2(
-					_elm_lang$core$Platform_Cmd_ops['!'],
-					_elm_lang$core$Native_Utils.update(
-						model,
-						{
-							pos: A2(
-								_elm_community$linear_algebra$Math_Matrix4$mul,
-								A2(_elm_lang$core$Set$member, 69, model.keys) ? _user$project$Matrices$moveUp(-0.5 * _p1) : _elm_community$linear_algebra$Math_Matrix4$identity,
-								A2(
-									_elm_community$linear_algebra$Math_Matrix4$mul,
-									A2(_elm_lang$core$Set$member, 81, model.keys) ? _user$project$Matrices$moveUp(0.5 * _p1) : _elm_community$linear_algebra$Math_Matrix4$identity,
-									A2(
-										_elm_community$linear_algebra$Math_Matrix4$mul,
-										A2(_elm_lang$core$Set$member, 68, model.keys) ? _user$project$Matrices$moveRight(0.5 * _p1) : _elm_community$linear_algebra$Math_Matrix4$identity,
-										A2(
-											_elm_community$linear_algebra$Math_Matrix4$mul,
-											A2(_elm_lang$core$Set$member, 65, model.keys) ? _user$project$Matrices$moveRight(-0.5 * _p1) : _elm_community$linear_algebra$Math_Matrix4$identity,
-											A2(
-												_elm_community$linear_algebra$Math_Matrix4$mul,
-												A2(_elm_lang$core$Set$member, 83, model.keys) ? _user$project$Matrices$moveForward(-0.5 * _p1) : _elm_community$linear_algebra$Math_Matrix4$identity,
-												A2(
-													_elm_community$linear_algebra$Math_Matrix4$mul,
-													A2(_elm_lang$core$Set$member, 87, model.keys) ? _user$project$Matrices$moveForward(0.5 * _p1) : _elm_community$linear_algebra$Math_Matrix4$identity,
-													A2(
-														_elm_community$linear_algebra$Math_Matrix4$mul,
-														A2(_elm_lang$core$Set$member, 85, model.keys) ? _user$project$Matrices$spin(-0.5 * _p1) : _elm_community$linear_algebra$Math_Matrix4$identity,
-														A2(
-															_elm_community$linear_algebra$Math_Matrix4$mul,
-															A2(_elm_lang$core$Set$member, 79, model.keys) ? _user$project$Matrices$spin(0.5 * _p1) : _elm_community$linear_algebra$Math_Matrix4$identity,
-															A2(
-																_elm_community$linear_algebra$Math_Matrix4$mul,
-																A2(_elm_lang$core$Set$member, 76, model.keys) ? _user$project$Matrices$turnRight(0.5 * _p1) : _elm_community$linear_algebra$Math_Matrix4$identity,
-																A2(
-																	_elm_community$linear_algebra$Math_Matrix4$mul,
-																	A2(_elm_lang$core$Set$member, 75, model.keys) ? _user$project$Matrices$turnUp(-0.5 * _p1) : _elm_community$linear_algebra$Math_Matrix4$identity,
-																	A2(
-																		_elm_community$linear_algebra$Math_Matrix4$mul,
-																		A2(_elm_lang$core$Set$member, 74, model.keys) ? _user$project$Matrices$turnRight(-0.5 * _p1) : _elm_community$linear_algebra$Math_Matrix4$identity,
-																		A2(
-																			_elm_community$linear_algebra$Math_Matrix4$mul,
-																			A2(_elm_lang$core$Set$member, 73, model.keys) ? _user$project$Matrices$turnUp(0.5 * _p1) : _elm_community$linear_algebra$Math_Matrix4$identity,
-																			model.pos))))))))))))
-						}),
-					{ctor: '[]'});
+var _user$project$Main$keys = _elm_lang$core$Dict$fromList(
+	{
+		ctor: '::',
+		_0: {
+			ctor: '_Tuple2',
+			_0: 73,
+			_1: function (dt) {
+				return _user$project$Matrices$turnUp(0.5 * dt);
+			}
+		},
+		_1: {
+			ctor: '::',
+			_0: {
+				ctor: '_Tuple2',
+				_0: 74,
+				_1: function (dt) {
+					return _user$project$Matrices$turnRight(-0.5 * dt);
+				}
+			},
+			_1: {
+				ctor: '::',
+				_0: {
+					ctor: '_Tuple2',
+					_0: 75,
+					_1: function (dt) {
+						return _user$project$Matrices$turnUp(-0.5 * dt);
+					}
+				},
+				_1: {
+					ctor: '::',
+					_0: {
+						ctor: '_Tuple2',
+						_0: 76,
+						_1: function (dt) {
+							return _user$project$Matrices$turnRight(0.5 * dt);
+						}
+					},
+					_1: {
+						ctor: '::',
+						_0: {
+							ctor: '_Tuple2',
+							_0: 79,
+							_1: function (dt) {
+								return _user$project$Matrices$spin(0.5 * dt);
+							}
+						},
+						_1: {
+							ctor: '::',
+							_0: {
+								ctor: '_Tuple2',
+								_0: 85,
+								_1: function (dt) {
+									return _user$project$Matrices$spin(-0.5 * dt);
+								}
+							},
+							_1: {
+								ctor: '::',
+								_0: {
+									ctor: '_Tuple2',
+									_0: 87,
+									_1: function (dt) {
+										return _user$project$Matrices$moveForward(0.5 * dt);
+									}
+								},
+								_1: {
+									ctor: '::',
+									_0: {
+										ctor: '_Tuple2',
+										_0: 83,
+										_1: function (dt) {
+											return _user$project$Matrices$moveForward(-0.5 * dt);
+										}
+									},
+									_1: {
+										ctor: '::',
+										_0: {
+											ctor: '_Tuple2',
+											_0: 65,
+											_1: function (dt) {
+												return _user$project$Matrices$moveRight(-0.5 * dt);
+											}
+										},
+										_1: {
+											ctor: '::',
+											_0: {
+												ctor: '_Tuple2',
+												_0: 68,
+												_1: function (dt) {
+													return _user$project$Matrices$moveRight(0.5 * dt);
+												}
+											},
+											_1: {
+												ctor: '::',
+												_0: {
+													ctor: '_Tuple2',
+													_0: 81,
+													_1: function (dt) {
+														return _user$project$Matrices$moveUp(0.5 * dt);
+													}
+												},
+												_1: {
+													ctor: '::',
+													_0: {
+														ctor: '_Tuple2',
+														_0: 69,
+														_1: function (dt) {
+															return _user$project$Matrices$moveUp(-0.5 * dt);
+														}
+													},
+													_1: {ctor: '[]'}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
 		}
 	});
-var _user$project$Main$Model = F2(
-	function (a, b) {
-		return {pos: a, keys: b};
+var _user$project$Main$Model = F4(
+	function (a, b, c, d) {
+		return {pos: a, keys: b, marks: c, marksMesh: d};
 	});
 var _user$project$Main$Uniforms = F3(
 	function (a, b, c) {
@@ -12748,22 +12803,22 @@ var _user$project$Main$mesh = _elm_community$webgl$WebGL$triangles(
 		function (m) {
 			return A2(
 				_elm_lang$core$List$map,
-				function (_p2) {
-					var _p3 = _p2;
+				function (_p0) {
+					var _p1 = _p0;
 					return {
 						ctor: '_Tuple3',
 						_0: A2(
 							_user$project$Main$mkVertex,
 							A3(_elm_community$linear_algebra$Math_Vector3$vec3, 1, 1, 1),
-							_p3._0),
+							_p1._0),
 						_1: A2(
 							_user$project$Main$mkVertex,
 							A3(_elm_community$linear_algebra$Math_Vector3$vec3, 1, 1, 1),
-							_p3._1),
+							_p1._1),
 						_2: A2(
 							_user$project$Main$mkVertex,
 							A3(_elm_community$linear_algebra$Math_Vector3$vec3, 1, 1, 1),
-							_p3._2)
+							_p1._2)
 					};
 				},
 				{
@@ -12793,18 +12848,18 @@ var _user$project$Main$mesh2 = _elm_community$webgl$WebGL$lines(
 		function (m) {
 			return A2(
 				_elm_lang$core$List$map,
-				function (_p4) {
-					var _p5 = _p4;
+				function (_p2) {
+					var _p3 = _p2;
 					return {
 						ctor: '_Tuple2',
 						_0: A2(
 							_user$project$Main$mkVertex,
 							A3(_elm_community$linear_algebra$Math_Vector3$vec3, 0.5, 0.5, 0.5),
-							_p5._0),
+							_p3._0),
 						_1: A2(
 							_user$project$Main$mkVertex,
 							A3(_elm_community$linear_algebra$Math_Vector3$vec3, 0.5, 0.5, 0.5),
-							_p5._1)
+							_p3._1)
 					};
 				},
 				{
@@ -12883,10 +12938,192 @@ var _user$project$Main$view = function (model) {
 					_user$project$Main$fragmentShader,
 					_user$project$Main$mesh,
 					_user$project$Main$uniforms(model)),
-				_1: {ctor: '[]'}
+				_1: {
+					ctor: '::',
+					_0: A4(
+						_elm_community$webgl$WebGL$entity,
+						_user$project$Main$vertexShader,
+						_user$project$Main$fragmentShader,
+						model.marksMesh,
+						_user$project$Main$uniforms(model)),
+					_1: {ctor: '[]'}
+				}
 			}
 		});
 };
+var _user$project$Main$marksMesh = function (marks) {
+	return _elm_community$webgl$WebGL$triangles(
+		A2(
+			_elm_lang$core$List$concatMap,
+			function (v) {
+				var red = A3(_elm_community$linear_algebra$Math_Vector3$vec3, 1, 0, 0);
+				var _p4 = _elm_community$linear_algebra$Math_Vector4$toTuple(v);
+				var x = _p4._0;
+				var y = _p4._1;
+				var z = _p4._2;
+				var w = _p4._3;
+				var v2 = A2(
+					_elm_community$linear_algebra$Math_Vector4$scale,
+					1.0e-2,
+					_elm_community$linear_algebra$Math_Vector4$fromTuple(
+						{ctor: '_Tuple4', _0: y, _1: 0 - x, _2: w, _3: 0 - z}));
+				var v3 = A2(
+					_elm_community$linear_algebra$Math_Vector4$scale,
+					1.0e-2,
+					_elm_community$linear_algebra$Math_Vector4$fromTuple(
+						{ctor: '_Tuple4', _0: z, _1: w, _2: 0 - x, _3: 0 - y}));
+				var v4 = A2(
+					_elm_community$linear_algebra$Math_Vector4$scale,
+					1.0e-2,
+					_elm_community$linear_algebra$Math_Vector4$fromTuple(
+						{ctor: '_Tuple4', _0: 0 - w, _1: z, _2: 0 - y, _3: x}));
+				return {
+					ctor: '::',
+					_0: {
+						ctor: '_Tuple3',
+						_0: A2(
+							_user$project$Main$mkVertex,
+							red,
+							A2(_elm_community$linear_algebra$Math_Vector4$add, v, v2)),
+						_1: A2(
+							_user$project$Main$mkVertex,
+							red,
+							A2(_elm_community$linear_algebra$Math_Vector4$add, v, v3)),
+						_2: A2(
+							_user$project$Main$mkVertex,
+							red,
+							A2(_elm_community$linear_algebra$Math_Vector4$add, v, v4))
+					},
+					_1: {
+						ctor: '::',
+						_0: {
+							ctor: '_Tuple3',
+							_0: A2(_user$project$Main$mkVertex, red, v),
+							_1: A2(
+								_user$project$Main$mkVertex,
+								red,
+								A2(_elm_community$linear_algebra$Math_Vector4$add, v, v3)),
+							_2: A2(
+								_user$project$Main$mkVertex,
+								red,
+								A2(_elm_community$linear_algebra$Math_Vector4$add, v, v4))
+						},
+						_1: {
+							ctor: '::',
+							_0: {
+								ctor: '_Tuple3',
+								_0: A2(
+									_user$project$Main$mkVertex,
+									red,
+									A2(_elm_community$linear_algebra$Math_Vector4$add, v, v2)),
+								_1: A2(_user$project$Main$mkVertex, red, v),
+								_2: A2(
+									_user$project$Main$mkVertex,
+									red,
+									A2(_elm_community$linear_algebra$Math_Vector4$add, v, v4))
+							},
+							_1: {
+								ctor: '::',
+								_0: {
+									ctor: '_Tuple3',
+									_0: A2(
+										_user$project$Main$mkVertex,
+										red,
+										A2(_elm_community$linear_algebra$Math_Vector4$add, v, v2)),
+									_1: A2(
+										_user$project$Main$mkVertex,
+										red,
+										A2(_elm_community$linear_algebra$Math_Vector4$add, v, v3)),
+									_2: A2(_user$project$Main$mkVertex, red, v)
+								},
+								_1: {ctor: '[]'}
+							}
+						}
+					}
+				};
+			},
+			marks));
+};
+var _user$project$Main$updateMarksMesh = function (model) {
+	return _elm_lang$core$Native_Utils.update(
+		model,
+		{
+			marksMesh: _user$project$Main$marksMesh(model.marks)
+		});
+};
+var _user$project$Main$update = F2(
+	function (msg, model) {
+		var _p5 = msg;
+		switch (_p5.ctor) {
+			case 'KeyDown':
+				if (_p5._0 === 32) {
+					return A2(
+						_elm_lang$core$Platform_Cmd_ops['!'],
+						_user$project$Main$updateMarksMesh(
+							_elm_lang$core$Native_Utils.update(
+								model,
+								{
+									marks: {
+										ctor: '::',
+										_0: A2(
+											_user$project$Matrices$transform4,
+											model.pos,
+											A4(_elm_community$linear_algebra$Math_Vector4$vec4, 0, 0, 0, 1)),
+										_1: model.marks
+									}
+								})),
+						{ctor: '[]'});
+				} else {
+					return A2(
+						_elm_lang$core$Platform_Cmd_ops['!'],
+						_elm_lang$core$Native_Utils.update(
+							model,
+							{
+								keys: A2(_elm_lang$core$Set$insert, _p5._0, model.keys)
+							}),
+						{ctor: '[]'});
+				}
+			case 'KeyUp':
+				return A2(
+					_elm_lang$core$Platform_Cmd_ops['!'],
+					_elm_lang$core$Native_Utils.update(
+						model,
+						{
+							keys: A2(_elm_lang$core$Set$remove, _p5._0, model.keys)
+						}),
+					{ctor: '[]'});
+			default:
+				return (!A2(
+					_elm_lang$core$List$any,
+					A2(_elm_lang$core$Basics$flip, _elm_lang$core$Set$member, model.keys),
+					_elm_lang$core$Dict$keys(_user$project$Main$keys))) ? A2(
+					_elm_lang$core$Platform_Cmd_ops['!'],
+					model,
+					{ctor: '[]'}) : A2(
+					_elm_lang$core$Platform_Cmd_ops['!'],
+					_elm_lang$core$Native_Utils.update(
+						model,
+						{
+							pos: A3(
+								_elm_lang$core$Set$foldr,
+								F2(
+									function (k, pos) {
+										var _p6 = A2(_elm_lang$core$Dict$get, k, _user$project$Main$keys);
+										if (_p6.ctor === 'Nothing') {
+											return pos;
+										} else {
+											return A2(
+												_elm_community$linear_algebra$Math_Matrix4$mul,
+												_p6._0(_p5._0),
+												pos);
+										}
+									}),
+								model.pos,
+								model.keys)
+						}),
+					{ctor: '[]'});
+		}
+	});
 var _user$project$Main$Tick = function (a) {
 	return {ctor: 'Tick', _0: a};
 };
@@ -12900,10 +13137,16 @@ var _user$project$Main$main = _elm_lang$html$Html$program(
 	{
 		init: A2(
 			_elm_lang$core$Platform_Cmd_ops['!'],
-			{pos: _elm_community$linear_algebra$Math_Matrix4$identity, keys: _elm_lang$core$Set$empty},
+			{
+				pos: _elm_community$linear_algebra$Math_Matrix4$identity,
+				keys: _elm_lang$core$Set$empty,
+				marks: {ctor: '[]'},
+				marksMesh: _user$project$Main$marksMesh(
+					{ctor: '[]'})
+			},
 			{ctor: '[]'}),
-		view: _user$project$Main$view,
-		subscriptions: function (_p6) {
+		view: _elm_lang$html$Html_Lazy$lazy(_user$project$Main$view),
+		subscriptions: function (_p7) {
 			return _elm_lang$core$Platform_Sub$batch(
 				{
 					ctor: '::',
@@ -12914,9 +13157,9 @@ var _user$project$Main$main = _elm_lang$html$Html$program(
 						_1: {
 							ctor: '::',
 							_0: _elm_lang$animation_frame$AnimationFrame$diffs(
-								function (_p7) {
+								function (_p8) {
 									return _user$project$Main$Tick(
-										_elm_lang$core$Time$inSeconds(_p7));
+										_elm_lang$core$Time$inSeconds(_p8));
 								}),
 							_1: {ctor: '[]'}
 						}
