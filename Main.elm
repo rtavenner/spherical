@@ -165,8 +165,8 @@ marksMesh marks =
             (\v -> 
                 let (x,y,z,w) = Vec4.toTuple v
                     v2 = Vec4.fromTuple (y,-x,w,-z) |> Vec4.scale 0.01
-                    v3 = Vec4.fromTuple (z,w,-x,-y) |> Vec4.scale 0.01
-                    v4 = Vec4.fromTuple (-w,z,-y,x) |> Vec4.scale 0.01
+                    v3 = Vec4.fromTuple (-z,w,x,-y) |> Vec4.scale 0.01
+                    v4 = Vec4.fromTuple (-w,-z,y,x) |> Vec4.scale 0.01
                     red = vec3 1 0 0
                 in
                     [ ( mkVertex red (Vec4.add v v2)
