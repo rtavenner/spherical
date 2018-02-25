@@ -2,6 +2,8 @@ module Matrices exposing (..)
 import Math.Vector4 exposing (vec4,Vec4)
 import Math.Matrix4 exposing (..)
 
+-- 4D Rotation Matrices
+
 fromTuples : ((Float,Float,Float,Float),(Float,Float,Float,Float),(Float,Float,Float,Float),(Float,Float,Float,Float)) -> Mat4
 fromTuples ((a,b,c,d),(e,f,g,h),(i,j,k,l),(m,n,o,p)) = fromRecord
     { m11 = a, m21 = b, m31 = c, m41 = d 

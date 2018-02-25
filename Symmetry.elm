@@ -1,6 +1,9 @@
-module Symmetry exposing (h3,h4)
+module Symmetry exposing (h4)
 import Math.Matrix4 as Mat4 exposing (Mat4,mul)
 import Matrices exposing (fromTuples, spin, moveForward)
+
+-- The purpose of this module is to generate a list of all 7200 elements of the chiral hexacosichoric group.
+-- Sadly, I do not know of a nice way of doing this.
 
 type alias Symmetries = List Mat4
 
