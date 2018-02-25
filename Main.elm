@@ -1,7 +1,8 @@
 import Html exposing (Html)
 import Html.Lazy exposing (lazy)
 import Html.Attributes exposing (width, height, style)
-import Html.Events exposing (onClick)
+import Html.Events exposing (onWithOptions)
+import Json.Decode
 import Math.Matrix4 as Mat4 exposing (Mat4)
 import Math.Vector3 as Vec3 exposing (vec3, Vec3)
 import Math.Vector4 as Vec4 exposing (vec4, Vec4)
@@ -98,6 +99,13 @@ keys = Dict.fromList
 
 updateMarksMesh : Model -> Model
 updateMarksMesh model = {model | marksMesh = marksMesh model.marks}
+
+
+onClick : msg -> Html.Attribute msg
+onClick msg =
+    onWithOptions "mousedown" 
+        { preventDefault = True, stopPropagation = True } 
+        (Json.Decode.succeed msg)
 
 view : Model -> Html Msg
 view model =
