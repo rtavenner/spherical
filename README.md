@@ -16,3 +16,5 @@ What's going on?
 Imagine you are stuck to the surface of a sphere with a dodecahedral pattern drawn on it. 
 It would seem that you are stuck in an endless network of pentagons, three around a vertex. Yet there are only twelve pentagons.
 This project is the same idea, but in one more dimension.
+
+(Note: The program is written in Elm. The index.html file is the output of the Elm compiler.)
