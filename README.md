@@ -7,7 +7,7 @@ IJKL to turn. UO to do an aileron roll.
 
 Spacebar to place a "breadcrumb".
 
-You can view the spherical world [here](http://htmlpreview.github.com/?https://github.com/rtavenner/spherical/blob/master/index.html).
+You can view the spherical world [here](http://htmlpreview.github.io/?https://github.com/rtavenner/spherical/blob/master/index.html).
 
 
 You are floating in a network of dodecahedral rooms, three around an edge. 
